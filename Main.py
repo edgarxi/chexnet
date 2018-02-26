@@ -25,7 +25,7 @@ def runTrain():
     timestampLaunch = timestampDate + '-' + timestampTime
     
     #---- Path to the directory with images
-    pathDirData = './database'
+    pathDirData = '../data'
     
     #---- Paths to the files with training, validation and testing sets.
     #---- Each file should contains pairs [path to image, output vector]
@@ -60,7 +60,7 @@ def runTrain():
 
 def runTest():
     
-    pathDirData = './database'
+    pathDirData = '../data'
     pathFileTest = './dataset/test_1.txt'
     nnArchitecture = 'DENSE-NET-121'
     nnIsTrained = True
@@ -72,7 +72,7 @@ def runTest():
     pathModel = './models/m-25012018-123527.pth.tar'
     
     timestampLaunch = ''
-    
+    print("loaded data, beginning test!")
     ChexnetTrainer.test(pathDirData, pathFileTest, pathModel, nnArchitecture, nnClassCount, nnIsTrained, trBatchSize, imgtransResize, imgtransCrop, timestampLaunch)
 
 #-------------------------------------------------------------------------------- 
