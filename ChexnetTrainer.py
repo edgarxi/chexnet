@@ -52,7 +52,9 @@ class ChexnetTrainer ():
             model = models.resnet18(pretrained = nnIsTrained)
             model.fc = nn.Linear(2048, nnClassCount)
             model = model.cuda()
-                
+        
+        model = torch.nn.DataParallel(model).cuda()
+
         #-------------------- SETTINGS: DATA TRANSFORMS
         normalize = transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
         
@@ -120,7 +122,7 @@ class ChexnetTrainer ():
                         
             target = target.cuda(async = True)
                  
-            varInput = torch.autograd.Variable(input)
+            varInput = torch.autograd.Variable(input.cuda(async = True))
             varTarget = torch.autograd.Variable(target)         
             varOutput = model(varInput)
             
@@ -145,7 +147,7 @@ class ChexnetTrainer ():
             
             target = target.cuda(async=True)
                  
-            varInput = torch.autograd.Variable(input, volatile=True)
+            varInput = torch.autograd.Variable(input.cuda(async = True), volatile=True)
             varTarget = torch.autograd.Variable(target, volatile=True)    
             varOutput = model(varInput)
             
@@ -213,7 +215,7 @@ class ChexnetTrainer ():
             model.fc = nn.Linear(2048, nnClassCount)
             model = model.cuda()
         
-        model = torch.nn.DataParallel(model).cuda() 
+        model = torch.nn.DataParallel(model).cuda()
         
         modelCheckpoint = torch.load(pathModel)
         model.load_state_dict(modelCheckpoint['state_dict'])

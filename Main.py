@@ -37,7 +37,7 @@ def runTrain():
     
     #---- Neural network parameters: type of the network, is it pre-trained 
     #---- on imagenet, number of classes
-    nnArchitecture = 'resnet-18' # DENSENET121
+    nnArchitecture = DENSENET121
     nnIsTrained = True
     nnClassCount = 14
     
@@ -63,7 +63,7 @@ def runTest():
     
     pathDirData = '../data'
     pathFileTest = './dataset/test_1.txt'
-    nnArchitecture = 'resnet-18'#'DENSE-NET-121'
+    nnArchitecture = 'DENSE-NET-121'
     nnIsTrained = True
     nnClassCount = 14
     trBatchSize = 16
