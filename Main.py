@@ -2,15 +2,16 @@ import os
 import numpy as np
 import time
 import sys
-
+import torchvision.models as models
 from ChexnetTrainer import ChexnetTrainer
 
 #-------------------------------------------------------------------------------- 
 
 def main ():
     
-    runTest()
-    #runTrain()
+    #runTest()
+    runTrain()
+    #runTest()
   
 #--------------------------------------------------------------------------------   
 
@@ -19,7 +20,7 @@ def runTrain():
     DENSENET121 = 'DENSE-NET-121'
     DENSENET169 = 'DENSE-NET-169'
     DENSENET201 = 'DENSE-NET-201'
-    
+    resnet18 = models.resnet18()
     timestampTime = time.strftime("%H%M%S")
     timestampDate = time.strftime("%d%m%Y")
     timestampLaunch = timestampDate + '-' + timestampTime
@@ -36,12 +37,12 @@ def runTrain():
     
     #---- Neural network parameters: type of the network, is it pre-trained 
     #---- on imagenet, number of classes
-    nnArchitecture = DENSENET121
+    nnArchitecture = 'resnet-18' # DENSENET121
     nnIsTrained = True
     nnClassCount = 14
     
     #---- Training settings: batch size, maximum number of epochs
-    trBatchSize = 16
+    trBatchSize = 32 #16
     trMaxEpoch = 100
     
     #---- Parameters related to image transforms: size of the down-scaled image, cropped image
@@ -62,7 +63,7 @@ def runTest():
     
     pathDirData = '../data'
     pathFileTest = './dataset/test_1.txt'
-    nnArchitecture = 'DENSE-NET-121'
+    nnArchitecture = 'resnet-18'#'DENSE-NET-121'
     nnIsTrained = True
     nnClassCount = 14
     trBatchSize = 16

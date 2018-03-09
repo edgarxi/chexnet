@@ -8,6 +8,7 @@ import torch.nn as nn
 import torch.backends.cudnn as cudnn
 import torchvision
 import torchvision.transforms as transforms
+import torchvision.models as models
 import torch.optim as optim
 import torch.nn.functional as tfunc
 from torch.utils.data import DataLoader
@@ -47,8 +48,10 @@ class ChexnetTrainer ():
         if nnArchitecture == 'DENSE-NET-121': model = DenseNet121(nnClassCount, nnIsTrained).cuda()
         elif nnArchitecture == 'DENSE-NET-169': model = DenseNet169(nnClassCount, nnIsTrained).cuda()
         elif nnArchitecture == 'DENSE-NET-201': model = DenseNet201(nnClassCount, nnIsTrained).cuda()
-        
-        model = torch.nn.DataParallel(model).cuda()
+        elif nnArchitecture == "resnet-18": 
+            model = models.resnet18(pretrained = nnIsTrained)
+            model.fc = nn.Linear(2048, nnClassCount)
+            model = model.cuda()
                 
         #-------------------- SETTINGS: DATA TRANSFORMS
         normalize = transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
@@ -68,7 +71,7 @@ class ChexnetTrainer ():
         dataLoaderVal = DataLoader(dataset=datasetVal, batch_size=trBatchSize, shuffle=False, num_workers=24, pin_memory=True)
         
         #-------------------- SETTINGS: OPTIMIZER & SCHEDULER
-        optimizer = optim.Adam (model.parameters(), lr=0.0001, betas=(0.9, 0.999), eps=1e-08, weight_decay=1e-5)
+        optimizer = optim.Adam(model.parameters(), lr=0.0001, betas=(0.9, 0.999), eps=1e-08, weight_decay=1e-5)
         scheduler = ReduceLROnPlateau(optimizer, factor = 0.1, patience = 5, mode = 'min')
                 
         #-------------------- SETTINGS: LOSS
@@ -205,6 +208,10 @@ class ChexnetTrainer ():
         if nnArchitecture == 'DENSE-NET-121': model = DenseNet121(nnClassCount, nnIsTrained).cuda()
         elif nnArchitecture == 'DENSE-NET-169': model = DenseNet169(nnClassCount, nnIsTrained).cuda()
         elif nnArchitecture == 'DENSE-NET-201': model = DenseNet201(nnClassCount, nnIsTrained).cuda()
+        elif nnArchitecture == "resnet-18": 
+            model = models.resnet18(pretrained = nnIsTrained)
+            model.fc = nn.Linear(2048, nnClassCount)
+            model = model.cuda()
         
         model = torch.nn.DataParallel(model).cuda() 
         
