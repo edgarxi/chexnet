@@ -20,24 +20,25 @@ def runTrain():
     DENSENET121 = 'DENSE-NET-121'
     DENSENET169 = 'DENSE-NET-169'
     DENSENET201 = 'DENSE-NET-201'
+    RESNET18 = 'RESNET-18'
     resnet18 = models.resnet18()
     timestampTime = time.strftime("%H%M%S")
     timestampDate = time.strftime("%d%m%Y")
     timestampLaunch = timestampDate + '-' + timestampTime
     
     #---- Path to the directory with images
-    pathDirData = '../data'
+    pathDirData = '/pylon5/ac5616p/edgarxi/chestx/data'
     
     #---- Paths to the files with training, validation and testing sets.
     #---- Each file should contains pairs [path to image, output vector]
     #---- Example: images_011/00027736_001.png 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-    pathFileTrain = './dataset/train_1.txt'
-    pathFileVal = './dataset/val_1.txt'
-    pathFileTest = './dataset/test_1.txt'
+    pathFileTrain = '/pylon5/ac5616p/edgarxi/chestx/chexnet/dataset/train_1.txt'
+    pathFileVal = '/pylon5/ac5616p/edgarxi/chestx/chexnet/dataset/val_1.txt'
+    pathFileTest = '/pylon5/ac5616p/edgarxi/chestx/chexnet/dataset/test_1.txt'
     
     #---- Neural network parameters: type of the network, is it pre-trained 
     #---- on imagenet, number of classes
-    nnArchitecture = DENSENET121
+    nnArchitecture = RESNET18
     nnIsTrained = True
     nnClassCount = 14
     
@@ -61,16 +62,16 @@ def runTrain():
 
 def runTest():
     
-    pathDirData = '../data'
-    pathFileTest = './dataset/test_1.txt'
-    nnArchitecture = 'DENSE-NET-121'
+    pathDirData = '/pylon5/ac5616p/edgarxi/chestx/data'
+    pathFileTest = '/pylon5/ac5616p/edgarxi/chestx/chexnet/dataset/test_1.txt'
+    nnArchitecture = RESNET18
     nnIsTrained = True
     nnClassCount = 14
     trBatchSize = 16
     imgtransResize = 256
     imgtransCrop = 224
     
-    pathModel = './models/m-25012018-123527.pth.tar'
+    pathModel = '/pylon5/ac5616p/edgarxi/chestx/chexnet/models/m-25012018-123527.pth.tar'
     
     timestampLaunch = ''
     print("loaded data, beginning test!")

@@ -20,6 +20,7 @@ from sklearn.metrics.ranking import roc_auc_score
 from DensenetModels import DenseNet121
 from DensenetModels import DenseNet169
 from DensenetModels import DenseNet201
+from DensenetModels import ResNet18
 from DatasetGenerator import DatasetGenerator
 
 
@@ -48,10 +49,7 @@ class ChexnetTrainer ():
         if nnArchitecture == 'DENSE-NET-121': model = DenseNet121(nnClassCount, nnIsTrained).cuda()
         elif nnArchitecture == 'DENSE-NET-169': model = DenseNet169(nnClassCount, nnIsTrained).cuda()
         elif nnArchitecture == 'DENSE-NET-201': model = DenseNet201(nnClassCount, nnIsTrained).cuda()
-        elif nnArchitecture == "resnet-18": 
-            model = models.resnet18(pretrained = nnIsTrained)
-            model.fc = nn.Linear(2048, nnClassCount)
-            model = model.cuda()
+        elif nnArchitecture == "RESNET-18": model =  ResNet18(nnClassCount, nnIsTrained).cuda()
         
         model = torch.nn.DataParallel(model).cuda()
 
